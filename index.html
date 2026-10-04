@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="Mumbai Budget"/>
+<meta name="apple-mobile-web-app-title" content="Budget tracker"/>
 <meta name="theme-color" content="#F5F3EE"/>
 <meta name="mobile-web-app-capable" content="yes"/>
-<title>Mumbai Budget</title>
+<title>Budget tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
@@ -431,7 +431,7 @@ body{display:flex;flex-direction:column;}
 <!-- HEADER -->
 <div id="app-header">
   <div class="header-inner">
-    <span class="header-title">Mumbai Budget</span>
+    <span class="header-title">Budget tracker</span>
     <div class="header-actions">
       <div class="icon-btn" id="month-display" title="Current Month" style="width:auto;padding:0 12px;border-radius:20px;font-size:12px;font-weight:600;color:var(--text2);">MAY 2026</div>
       <div class="icon-btn" id="notif-btn" title="Notifications">🔔</div>
@@ -469,12 +469,12 @@ body{display:flex;flex-direction:column;}
       </div>
       <div class="wallet-card" data-wallet="cc">
         <div class="wallet-icon">💳</div>
-        <div class="wallet-label">Credit Card</div>
+        <div class="wallet-label">HDFC Salary Acc.</div>
         <div class="wallet-amount" id="w-cc">₹0</div>
       </div>
       <div class="wallet-card" data-wallet="pluxee">
         <div class="wallet-icon">🍽️</div>
-        <div class="wallet-label">Pluxee / Meal</div>
+        <div class="wallet-label">Canara Bank</div>
         <div class="wallet-amount" id="w-pluxee">₹0</div>
       </div>
     </div>
@@ -614,8 +614,8 @@ body{display:flex;flex-direction:column;}
           <select class="field-select" id="inp-wallet">
             <option value="hdfc">🏦 HDFC Bank</option>
             <option value="cash">💵 Cash</option>
-            <option value="cc">💳 Credit Card</option>
-            <option value="pluxee">🍽️ Pluxee / Meal</option>
+            <option value="cc">💳 HDFC Salary Acc.</option>
+            <option value="pluxee">🍽️ Canara Bank</option>
           </select>
         </div>
       </div>
@@ -680,8 +680,8 @@ body{display:flex;flex-direction:column;}
           <select class="field-select" id="new-macro-wallet">
             <option value="cash">Cash</option>
             <option value="hdfc">HDFC</option>
-            <option value="cc">CC</option>
-            <option value="pluxee">Pluxee</option>
+            <option value="cc">HDFC Salary</option>
+            <option value="pluxee">Canara</option>
           </select>
           <button class="btn btn-primary" id="save-macro-btn">Save Macro</button>
         </div>
@@ -793,7 +793,7 @@ body{display:flex;flex-direction:column;}
           <select class="field-select" id="new-emi-wallet">
             <option value="hdfc">HDFC Bank</option>
             <option value="cash">Cash</option>
-            <option value="cc">Credit Card</option>
+            <option value="cc">HDFC Salary Acc.</option>
           </select>
         </div>
       </div>
@@ -881,11 +881,11 @@ body{display:flex;flex-direction:column;}
           <input type="number" class="field-input" id="s-wallet-hdfc" placeholder="0" inputmode="decimal"/>
         </div>
         <div>
-          <label class="field-label">Credit Card (₹)</label>
+          <label class="field-label">HDFC Salary Acc. (₹)</label>
           <input type="number" class="field-input" id="s-wallet-cc" placeholder="0" inputmode="decimal"/>
         </div>
         <div>
-          <label class="field-label">Pluxee / Meal (₹)</label>
+          <label class="field-label">Canara Bank (₹)</label>
           <input type="number" class="field-input" id="s-wallet-pluxee" placeholder="0" inputmode="decimal"/>
         </div>
       </div>
@@ -917,7 +917,7 @@ body{display:flex;flex-direction:column;}
       <button class="btn btn-danger btn-full btn-sm" id="reset-all-btn">⚠️ Reset All Data</button>
     </div>
 
-    <div style="text-align:center;padding:16px;font-size:11px;color:var(--text3);">Mumbai Budget v2.0 — Offline PWA</div>
+    <div style="text-align:center;padding:16px;font-size:11px;color:var(--text3);">Budget tracker v2.0 — Offline PWA</div>
 
   </div>
 
@@ -956,11 +956,12 @@ body{display:flex;flex-direction:column;}
 // ═══════════════════════════════════════════════
 // CONSTANTS & CONFIG
 // ═══════════════════════════════════════════════
+const STORAGE_KEY = 'mb_state_v3';
 const CATEGORIES = ['Rent','Groceries','Transport','Food & Dining','Utilities','Entertainment','Health','Shopping','Savings','Other'];
 const CAT_ICONS  = {Rent:'🏠',Groceries:'🛒',Transport:'🚗','Food & Dining':'🍔',Utilities:'💡',Entertainment:'🎬',Health:'❤️',Shopping:'🛍️',Savings:'🏦',Other:'📦'};
 const CAT_COLORS = ['#C84B31','#276749','#2B6CB0','#B7791F','#6B46C1','#D69E2E','#E53E3E','#DD6B20','#38A169','#718096'];
 const NEEDS_CATS = ['Rent','Groceries','Utilities','Health','Transport'];
-const WALLET_LABELS = {cash:'Cash',hdfc:'HDFC Bank',cc:'Credit Card',pluxee:'Pluxee / Meal'};
+const WALLET_LABELS = {cash:'Cash',hdfc:'HDFC Bank',cc:'HDFC Salary Acc.',pluxee:'Canara Bank'};
 const DEFAULT_MACROS = [
   {label:'Auto ₹50',amount:50,category:'Transport',wallet:'cash',desc:'Daily Auto'},
   {label:'Chai ₹20',amount:20,category:'Food & Dining',wallet:'cash',desc:'Chai / Tapri'},
@@ -994,11 +995,11 @@ let state = {
 // PERSISTENCE
 // ═══════════════════════════════════════════════
 function saveState() {
-  try { localStorage.setItem('mb_state_v2', JSON.stringify(state)); } catch(e) {}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
 }
 function loadState() {
   try {
-    const raw = localStorage.getItem('mb_state_v2');
+    const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
       // Deep merge to avoid missing keys on upgrade
@@ -1818,7 +1819,7 @@ function scheduleReminder() {
     const delay = target - now;
     setTimeout(() => {
       try {
-        new Notification('Mumbai Budget 💸', {body:'Time to log today\'s expenses! Keep your budget on track.',icon:''});
+        new Notification('Budget tracker 💸', {body:'Time to log today\'s expenses! Keep your budget on track.',icon:''});
         scheduleReminder(); // reschedule for next day
       } catch(e) {}
     }, delay);
@@ -1828,7 +1829,7 @@ function sendTestNotif() {
   try {
     if (!('Notification' in window)) { showToast('Not supported'); return; }
     if (Notification.permission==='granted') {
-      new Notification('Mumbai Budget 💸', {body:'Test: Log your expenses daily!'});
+      new Notification('Budget tracker 💸', {body:'Test: Log your expenses daily!'});
     } else {
       requestNotifPermission();
     }
@@ -2243,7 +2244,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const resetBtn = document.getElementById('reset-all-btn');
     if (resetBtn) resetBtn.addEventListener('click', function() {
       if (confirm('⚠️ This will permanently delete ALL your data. Are you absolutely sure?')) {
-        localStorage.removeItem('mb_state_v2');
+        localStorage.removeItem(STORAGE_KEY);
         state = {transactions:[],wallets:{cash:0,hdfc:0,cc:0,pluxee:0},walletBase:{cash:0,hdfc:0,cc:0,pluxee:0},investments:[],emis:[],portfolioMarketValue:0,caps:{},masterBudget:50000,macros:JSON.parse(JSON.stringify(DEFAULT_MACROS)),archive:[],darkMode:false,notifEnabled:false,currentMonth:''};
         saveState();
         showToast('All data reset');
